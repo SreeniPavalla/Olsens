@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:squery="http://bdm.nsw.gov.au/Schemas/StatusQuery_v1.0" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:tns="http://bdm.nsw.gov.au/Schemas/StatusQueryService_v1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:common="http://bdm.nsw.gov.au/Schemas/CommonTypes_v1.0" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="StatusQuery" targetNamespace="http://bdm.nsw.gov.au/Schemas/StatusQueryService_v1.0" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xs:schema targetNamespace="http://bdm.nsw.gov.au/Schemas/StatusQuery_v1.0">
+      <xs:include schemaLocation="https://lifelink.bdm.nsw.gov.au/lifelink/schemas/StatusQuery_v1.0.xsd" />
+    </xs:schema>
+    <xs:schema targetNamespace="http://bdm.nsw.gov.au/Schemas/CommonTypes_v1.0">
+      <xs:include schemaLocation="https://lifelink.bdm.nsw.gov.au/lifelink/schemas/CommonTypes_v1.0.xsd" />
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="StatusQueryRequest">
+    <wsdl:part name="StatusRequestParam" element="squery:StatusQueryRequest" />
+  </wsdl:message>
+  <wsdl:message name="StatusQueryResponse">
+    <wsdl:part name="StatusResponseParam" element="squery:StatusQueryResponse" />
+  </wsdl:message>
+  <wsdl:message name="Fault">
+    <wsdl:part name="FaultParam" element="common:Fault" />
+  </wsdl:message>
+  <wsdl:portType name="StatusQueryPortType">
+    <wsdl:operation name="StatusQuery">
+      <wsdl:input name="Request" message="tns:StatusQueryRequest" />
+      <wsdl:output name="Response" message="tns:StatusQueryResponse" />
+      <wsdl:fault name="Fault" message="tns:Fault" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="StatusQueryBinding" type="tns:StatusQueryPortType">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="StatusQuery">
+      <soap:operation soapAction="/StatusQuery" style="document" />
+      <wsdl:input name="Request">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="Response">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="Fault">
+        <soap:fault use="literal" name="Fault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="StatusQueryService">
+    <wsdl:port name="StatusQueryPort" binding="tns:StatusQueryBinding">
+      <soap:address location="https://lifelink.bdm.nsw.gov.au/lifelink/b2b/StatusQuery" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

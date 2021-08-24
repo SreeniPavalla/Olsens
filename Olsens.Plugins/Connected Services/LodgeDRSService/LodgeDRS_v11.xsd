@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<schema xmlns:types="http://bdm.nsw.gov.au/Schemas/CommonTypes_v1.0" xmlns:tns="http://bdm.nsw.gov.au/Schemas/LodgeDRS_v1.0" xmlns:app="http://bdm.nsw.gov.au/Schemas/LodgeApplication_v1.0" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://bdm.nsw.gov.au/Schemas/LodgeDRS_v1.0" xmlns="http://www.w3.org/2001/XMLSchema">
+  <import schemaLocation="CommonTypes_v1.0.xsd" namespace="http://bdm.nsw.gov.au/Schemas/CommonTypes_v1.0" />
+  <import schemaLocation="LodgeApplication_v1.0.xsd" namespace="http://bdm.nsw.gov.au/Schemas/LodgeApplication_v1.0" />
+  <element name="LodgeResponse" type="types:LodgeWithCertificateResponseType" />
+  <element name="DRSRequest" type="tns:DRSRequestType" />
+  <complexType name="DRSRequestType">
+    <sequence>
+      <element minOccurs="0" maxOccurs="1" name="DRSDetails" type="tns:DRSDetailsType" />
+      <element minOccurs="0" maxOccurs="1" name="CertificateRequest" type="app:ApplicationDetails" />
+    </sequence>
+  </complexType>
+  <complexType name="AdditionalDetails">
+    <sequence>
+      <element minOccurs="0" name="DRSFormNumber" type="int" />
+      <element minOccurs="0" name="PhysicalFileReference">
+        <simpleType>
+          <restriction base="string">
+            <maxLength value="14" />
+          </restriction>
+        </simpleType>
+      </element>
+      <element name="LateRegistration" type="boolean" />
+    </sequence>
+  </complexType>
+  <complexType name="DeceasedDetails">
+    <sequence>
+      <element minOccurs="0" name="DeceasedName" type="types:NameType" />
+      <element minOccurs="0" name="FamilyNameAtBirth" type="string" />
+      <element minOccurs="0" name="Gender" type="tns:GenderType" />
+      <element name="DateOfDeathType" type="types:DateRangeBasis" />
+      <element minOccurs="0" name="DateOfDeathFrom" type="date" />
+      <element minOccurs="0" name="DateOfDeathTo" type="date" />
+      <element minOccurs="0" name="DateOfDeathExact" type="date" />
+      <element minOccurs="0" name="DateOfBirth" type="date" />
+      <element minOccurs="0" name="Age" type="int" />
+      <element minOccurs="0" name="AgeUnit" type="types:TimeUnits" />
+      <element name="DeathOccuredInHospital" type="boolean" />
+      <element minOccurs="0" name="DeathHospital">
+        <simpleType>
+          <restriction base="string">
+            <maxLength value="60" />
+          </restriction>
+        </simpleType>
+      </element>
+      <element minOccurs="0" name="DeathHospitalSuburb">
+        <simpleType>
+          <restriction base="string">
+            <maxLength value="50" />
+          </restriction>
+        </simpleType>
+      </element>
+      <element minOccurs="0" name="DeathAddress" type="types:AddressType" />
+      <element minOccurs="0" name="DeathLocation">
+        <simpleType>
+          <restriction base="string">
+            <maxLength value="70" />
+          </restriction>
+        </simpleType>
+      </element>
+      <element minOccurs="0" name="ResidentialAddress" type="types:AddressType" />
+      <element minOccurs="0" name="PlaceOfBirth" type="types:AddressSuburbStateCountryType" />
+      <element minOccurs="0" name="DateOfArrivalToAus" type="date" />
+      <element minOccurs="0" name="Occupation" type="types:OccupationType" />
+      <element minOccurs="0" name="RetiredAtTimeOfDeath" type="boolean" />
+      <element minOccurs="0" name="PensionerAtTimeOfDeath" type="boolean" />
+      <element minOccurs="0" name="PensionType">
+        <simpleType>
+          <restriction base="string">
+            <maxLength value="80" />
+          </restriction>
+        </simpleType>
+      </element>
+      <element minOccurs="0" name="Aboriginality" type="types:AboriginalityType" />
+    </sequence>
+  </complexType>
+  <complexType name="ChildrenOfDeceased">
+    <sequence>
+      <element minOccurs="0" name="ChildName" type="types:NameType" />
+      <element minOccurs="0" name="ChildDateOfBirth" type="date" />
+      <element minOccurs="0" name="ChildAge" type="int" />
+      <element minOccurs="0" name="ChildAgeUnit" type="types:TimeUnits" />
+      <element minOccurs="0" name="LifeStatus">
+        <simpleType>
+          <restriction base="string">
+            <enumeration value="Alive" />
+            <enumeration value="Deceased" />
+            <enumeration value="Stillborn" />
+            <enumeration value="Unknown" />
+          </restriction>
+        </simpleType>
+      </element>
+      <element minOccurs="0" name="ChildGender" type="tns:GenderType" />
+    </sequence>
+  </complexType>
+  <complexType name="ParentsOfDeceased">
+    <sequence>
+      <element minOccurs="0" name="ParentOneType" type="types:ParentRelationshipType" />
+      <element minOccurs="0" name="ParentOneName" type="types:ExtendedNameType" />
+      <element minOccurs="0" name="ParentOneGender" type="tns:GenderType" />
+      <element minOccurs="0" name="ParentOneOccupation" type="types:OccupationType" />
+      <element minOccurs="0" name="ParentTwoType" type="types:ParentRelationshipType" />
+      <element minOccurs="0" name="ParentTwoName" type="types:ExtendedNameType" />
+      <element minOccurs="0" name="ParentTwoGender" type="tns:GenderType" />
+      <element minOccurs="0" name="ParentTwoOccupation" type="types:OccupationType" />
+    </sequence>
+  </complexType>
+  <simpleType name="TypeOfDeathCertificate">
+    <restriction base="string">
+      <enumeration value="MCCD" />
+      <enumeration value="MCPD" />
+      <enumeration value="Coroner" />
+    </restriction>
+  </simpleType>
+  <complexType name="DisposalDetails">
+    <sequence>
+      <element minOccurs="0" name="DateOfDisposal" type="date" />
+      <element minOccurs="0" name="MethodOfDisposal">
+        <simpleType>
+          <restriction base="string">
+            <enumeration value="Body Donation" />
+            <enumeration value="Body Not Recovered" />
+            <enumeration value="Buried" />
+            <enumeration value="Cremated" />
+            <enumeration value="Repatriated" />
+          </restriction>
+        </simpleType>
+      </element>
+      <element minOccurs="0" name="DisposalDetails" type="tns:BodyDisposalDataType" />
+    </sequence>
+  </complexType>
+  <complexType name="FuneralDirectorDetails">
+    <sequence>
+      <element minOccurs="0" name="FuneralDirectorID">
+        <simpleType>
+          <restriction base="string">
+            <maxLength value="30" />
+          </restriction>
+        </simpleType>
+      </element>
+      <element minOccurs="0" name="DebtorID" type="string" />
+      <element minOccurs="0" name="ContactName" type="string" />
+      <element minOccurs="1" name="NameDetails" type="types:MandatoryNameType" />
+      <element minOccurs="0" name="CompanyName">
+        <simpleType>
+          <restriction base="string">
+            <maxLength value="60" />
+          </restriction>
+        </simpleType>
+      </element>
+      <element minOccurs="0" name="FuneralDirectorAddress" type="types:AddressType" />
+      <element minOccurs="0" name="FuneralDirectorContacts" type="types:ContactDetailsType" />
+    </sequence>
+  </complexType>
+  <complexType name="BodyDisposalDataType">
+    <sequence>
+      <element minOccurs="0" name="DisposalOrganisationName">
+        <simpleType>
+          <restriction base="string">
+            <maxLength value="60" />
+          </restriction>
+        </simpleType>
+      </element>
+      <element minOccurs="0" name="DisposalAddress" type="types:AddressType" />
+      <element minOccurs="0" name="NoBodyFound" type="boolean" />
+      <element minOccurs="0" name="DestinationCountry">
+        <simpleType>
+          <restriction base="string">
+            <maxLength value="50" />
+          </restriction>
+        </simpleType>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="MarriageDetailsType">
+    <sequence>
+      <element name="MarriageStatus" type="types:MaritalStatusType" />
+      <element minOccurs="0" name="MarriageLocation">
+        <simpleType>
+          <restriction base="string">
+            <maxLength value="70" />
+          </restriction>
+        </simpleType>
+      </element>
+      <element minOccurs="0" name="MarriageAddress" type="types:AddressSuburbStateCountryType" />
+      <element minOccurs="0" name="AgeAtCommencement" type="int" />
+      <element minOccurs="0" name="SpouseName" type="types:NameType" />
+      <element minOccurs="0" name="SpouseGender" type="tns:GenderType" />
+    </sequence>
+  </complexType>
+  <complexType name="PreviousMarriageDetailsType">
+    <sequence>
+      <element name="MarriageType" type="types:MarriageType" />
+      <element minOccurs="0" name="MarriageLocation">
+        <simpleType>
+          <restriction base="string">
+            <maxLength value="70" />
+          </restriction>
+        </simpleType>
+      </element>
+      <element minOccurs="0" name="MarriageAddress" type="types:AddressSuburbStateCountryType" />
+      <element minOccurs="0" name="AgeAtCommencement" type="int" />
+      <element minOccurs="0" name="SpouseName" type="types:NameType" />
+      <element minOccurs="0" name="SpouseGender" type="tns:GenderType" />
+    </sequence>
+  </complexType>
+  <simpleType name="GenderType">
+    <restriction base="string">
+      <enumeration value="Male" />
+      <enumeration value="Female" />
+      <enumeration value="Indeterminate" />
+      <enumeration value="Intersex" />
+      <enumeration value="Unknown" />
+      <enumeration value="Non-specific" />
+    </restriction>
+  </simpleType>
+  <complexType name="DRSDetailsType">
+    <sequence>
+      <element minOccurs="0" name="AdditionalDetails" type="tns:AdditionalDetails" />
+      <element minOccurs="0" name="DeceasedDetails" type="tns:DeceasedDetails" />
+      <element minOccurs="0" maxOccurs="1" name="MarriageDetails" type="tns:MarriageDetailsType" />
+      <element minOccurs="0" maxOccurs="unbounded" name="PreviousMarriageDetails" type="tns:PreviousMarriageDetailsType" />
+      <element minOccurs="0" maxOccurs="unbounded" name="ChildrenOfDeceased" type="tns:ChildrenOfDeceased" />
+      <element minOccurs="0" name="ParentsOfDeceased" type="tns:ParentsOfDeceased" />
+      <element minOccurs="0" name="InformantDetails" type="types:InformantDetailsType" />
+      <element minOccurs="0" name="TypeOfDeathCertificate" type="tns:TypeOfDeathCertificate" />
+      <element minOccurs="0" name="DisposalDetails" type="tns:DisposalDetails" />
+      <element minOccurs="0" name="FuneralDirectorDetails" type="tns:FuneralDirectorDetails" />
+    </sequence>
+  </complexType>
+</schema>

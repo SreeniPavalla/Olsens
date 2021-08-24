@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<schema xmlns:types="http://bdm.nsw.gov.au/Schemas/CommonTypes_v1.0" xmlns:tns="http://bdm.nsw.gov.au/Schemas/LodgeApplication_v1.0" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://bdm.nsw.gov.au/Schemas/LodgeApplication_v1.0" xmlns="http://www.w3.org/2001/XMLSchema">
+  <import schemaLocation="CommonTypes_v1.0.xsd" namespace="http://bdm.nsw.gov.au/Schemas/CommonTypes_v1.0" />
+  <complexType name="ApplicationDetails">
+    <sequence>
+      <element minOccurs="0" maxOccurs="1" name="NotificationID">
+        <simpleType>
+          <restriction base="string">
+            <pattern value="\d+/\d{4}" />
+          </restriction>
+        </simpleType>
+      </element>
+      <element minOccurs="1" maxOccurs="1" name="Product" type="tns:ProductDetailsType" />
+      <element minOccurs="0" maxOccurs="unbounded" name="Subproducts" type="tns:SubProductDetailsType" />
+      <element minOccurs="0" maxOccurs="1" name="Extras">
+        <complexType>
+          <sequence>
+            <element minOccurs="0" maxOccurs="unbounded" name="Extra" type="tns:ProductDetailsType" />
+          </sequence>
+        </complexType>
+      </element>
+      <choice minOccurs="0" maxOccurs="1">
+        <element minOccurs="0" maxOccurs="1" name="DeceasedDetails" type="tns:DeceasedDetailsType" />
+        <element minOccurs="0" maxOccurs="1" name="MarriageSubjectDetails" type="tns:MarriageSubjectDetailsType" />
+      </choice>
+      <element minOccurs="1" maxOccurs="1" name="Delivery" type="tns:DeliveryDetailsType" />
+      <element minOccurs="1" maxOccurs="1" name="Stakeholder" type="string" />
+      <element minOccurs="0" maxOccurs="1" name="PaymentBy">
+        <simpleType>
+          <restriction base="string">
+            <enumeration value="Account" />
+            <enumeration value="Credit Card" />
+          </restriction>
+        </simpleType>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="ProductDetailsType">
+    <sequence>
+      <element minOccurs="1" maxOccurs="1" name="ProductCode" type="string" />
+      <element minOccurs="1" maxOccurs="1" name="Quantity" type="int" />
+      <element minOccurs="0" maxOccurs="1" name="Specification" type="string" />
+    </sequence>
+  </complexType>
+  <complexType name="SubProductDetailsType">
+    <sequence>
+      <element minOccurs="1" maxOccurs="1" name="ProductCode" type="string" />
+      <element minOccurs="1" maxOccurs="1" name="Specification" type="string" />
+    </sequence>
+  </complexType>
+  <complexType name="DeliveryDetailsType">
+    <sequence>
+      <element minOccurs="1" maxOccurs="1" name="DeliveryMethod" type="string" />
+      <element minOccurs="0" maxOccurs="1" name="DeliveryAddress" type="types:AddressType" />
+      <element minOccurs="0" maxOccurs="1" name="DeliveryName" type="types:NameType" />
+      <element minOccurs="0" maxOccurs="1" name="CompanyName">
+        <simpleType>
+          <restriction base="string">
+            <maxLength value="60" />
+          </restriction>
+        </simpleType>
+      </element>
+      <element maxOccurs="1" name="ExternalRefNumber">
+        <simpleType>
+          <restriction base="string">
+            <maxLength value="30" />
+          </restriction>
+        </simpleType>
+      </element>
+      <element minOccurs="0" maxOccurs="1" name="FaxToPassportOffice" type="boolean" />
+    </sequence>
+  </complexType>
+  <complexType name="DeceasedDetailsType">
+    <sequence>
+      <element minOccurs="0" name="DeceasedName" type="types:ExtendedNameType" />
+      <element name="DateOfDeathType" type="types:DateRangeBasis" />
+      <element minOccurs="0" name="DateOfDeathFrom" type="date" />
+      <element minOccurs="0" name="DateOfDeathTo" type="date" />
+      <element minOccurs="0" name="DateOfDeathExact" type="date" />
+      <element minOccurs="0" name="PlaceOfDeathSuburb">
+        <simpleType>
+          <restriction base="string">
+            <maxLength value="50" />
+          </restriction>
+        </simpleType>
+      </element>
+      <element minOccurs="0" name="Parent1Name" type="types:ExtendedNameType" />
+      <element minOccurs="0" name="Parent2Name" type="types:ExtendedNameType" />
+    </sequence>
+  </complexType>
+  <complexType name="MarriageSubjectDetailsType">
+    <sequence>
+      <element name="party1Description" type="types:partyDescriptionType" />
+      <element minOccurs="0" name="GroomName" type="types:NameType" />
+      <element minOccurs="0" name="GroomDateOfBirth" type="date" />
+      <element name="party2Description" type="types:partyDescriptionType" />
+      <element minOccurs="0" name="BrideName" type="types:NameType" />
+      <element minOccurs="0" name="BrideDateOfBirth" type="date" />
+      <element minOccurs="0" name="DateOfMarriage" type="date" />
+      <element minOccurs="0" name="PlaceOfMarriageSuburb">
+        <simpleType>
+          <restriction base="string">
+            <maxLength value="50" />
+          </restriction>
+        </simpleType>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="AccountDetailsType">
+    <sequence>
+      <element minOccurs="1" maxOccurs="1" name="DebtorName" type="string" />
+      <element minOccurs="1" maxOccurs="1" name="AccountNumber" type="string" />
+    </sequence>
+  </complexType>
+</schema>

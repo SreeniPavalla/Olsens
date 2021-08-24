@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://bdm.nsw.gov.au/Schemas/StatusQuery_v1.0" targetNamespace="http://bdm.nsw.gov.au/Schemas/StatusQuery_v1.0" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="StatusQueryRequest" type="tns:StatusQueryRequestType" />
+  <xs:element name="StatusQueryResponse" type="tns:StatusQueryResponseType" />
+  <xs:complexType name="StatusQueryRequestType">
+    <xs:sequence>
+      <xs:element name="NotificationID">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:pattern value="\d+/\d{4}" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="StatusQueryResponseType">
+    <xs:sequence>
+      <xs:element name="NotificationID" type="xs:string" />
+      <xs:element name="Status" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

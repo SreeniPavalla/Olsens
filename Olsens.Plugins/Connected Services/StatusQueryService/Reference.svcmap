@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="9bb3b84e-0eb6-4f8b-bb36-40ddb53b6a2d" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="https://lifelink.bdm.nsw.gov.au/lifelink/b2b/statusQuery.wsdl" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="StatusQuery_v11.xsd" MetadataType="Schema" ID="aeda3412-3e00-4849-8f60-610846de1de0" SourceId="1" SourceUrl="https://lifelink.bdm.nsw.gov.au/lifelink/schemas/StatusQuery_v1.0.xsd" />
+    <MetadataFile FileName="StatusQuery1.wsdl" MetadataType="Wsdl" ID="cfaa1862-cfc4-4091-986d-a0891790e8ed" SourceId="1" SourceUrl="https://lifelink.bdm.nsw.gov.au/lifelink/b2b/statusQuery.wsdl" />
+    <MetadataFile FileName="CommonTypes_v11.xsd" MetadataType="Schema" ID="d1c1b637-832b-4108-ad22-173cb72fb801" SourceId="1" SourceUrl="https://lifelink.bdm.nsw.gov.au/lifelink/schemas/CommonTypes_v1.0.xsd" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

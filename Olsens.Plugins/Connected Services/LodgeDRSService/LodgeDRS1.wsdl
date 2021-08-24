@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:tns="http://bdm.nsw.gov.au/Schemas/LodgeDrsService_v1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:common="http://bdm.nsw.gov.au/Schemas/CommonTypes_v1.0" xmlns:drs="http://bdm.nsw.gov.au/Schemas/LodgeDRS_v1.0" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="LodgeDRS" targetNamespace="http://bdm.nsw.gov.au/Schemas/LodgeDrsService_v1.0" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xs:schema targetNamespace="http://bdm.nsw.gov.au/Schemas/LodgeDRS_v1.0">
+      <xs:include schemaLocation="https://lifelink.bdm.nsw.gov.au/lifelink/schemas/LodgeDRS_v1.0.xsd" />
+    </xs:schema>
+    <xs:schema targetNamespace="http://bdm.nsw.gov.au/Schemas/CommonTypes_v1.0">
+      <xs:include schemaLocation="https://lifelink.bdm.nsw.gov.au/lifelink/schemas/CommonTypes_v1.0.xsd" />
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="DRSRequest">
+    <wsdl:part name="DRSRequestParam" element="drs:DRSRequest" />
+  </wsdl:message>
+  <wsdl:message name="DRSResponse">
+    <wsdl:part name="DRSResponseParam" element="drs:LodgeResponse" />
+  </wsdl:message>
+  <wsdl:message name="Fault">
+    <wsdl:part name="FaultParam" element="common:Fault" />
+  </wsdl:message>
+  <wsdl:portType name="LodgeDRSPortType">
+    <wsdl:operation name="LodgeDRS">
+      <wsdl:input name="Request" message="tns:DRSRequest" />
+      <wsdl:output name="Response" message="tns:DRSResponse" />
+      <wsdl:fault name="Fault" message="tns:Fault" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="LodgeDRSBinding" type="tns:LodgeDRSPortType">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="LodgeDRS">
+      <soap:operation soapAction="/LodgeDRS" style="document" />
+      <wsdl:input name="Request">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="Response">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="Fault">
+        <soap:fault use="literal" name="Fault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="LodgeDRSService">
+    <wsdl:port name="LodgeDRSPort" binding="tns:LodgeDRSBinding">
+      <soap:address location="https://lifelink.bdm.nsw.gov.au/lifelink/b2b/LodgeDRS" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

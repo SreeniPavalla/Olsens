@@ -1,0 +1,546 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:intf="urn:SmsGateway" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:impl="urn:SmsGateway" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="urn:SmsGateway" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:SmsGateway">
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:complexType name="SmsMessageMobile">
+        <xsd:sequence>
+          <xsd:element name="message" nillable="true" type="xsd:string" />
+          <xsd:element name="mobile" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="SmsReply">
+        <xsd:sequence>
+          <xsd:element name="message" nillable="true" type="xsd:string" />
+          <xsd:element name="messageId" nillable="true" type="xsd:string" />
+          <xsd:element name="mobile" nillable="true" type="xsd:string" />
+          <xsd:element name="when" type="xsd:long" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOf_xsd_string">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="xsd:string[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="SmsMessage" abstract="true">
+        <xsd:sequence>
+          <xsd:element name="message" nillable="true" type="xsd:string" />
+          <xsd:element name="mobiles" nillable="true" type="impl:ArrayOf_xsd_string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="TwoWaySmsMessage">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="impl:SmsMessage">
+            <xsd:sequence>
+              <xsd:element name="messageId" nillable="true" type="xsd:string" />
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="BrandedSmsMessage">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="impl:SmsMessage">
+            <xsd:sequence>
+              <xsd:element name="senderId" nillable="true" type="xsd:string" />
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfSmsMessageMobile">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="impl:SmsMessageMobile[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="SmsMessageList" abstract="true">
+        <xsd:sequence>
+          <xsd:element name="messages" nillable="true" type="impl:ArrayOfSmsMessageMobile" />
+          <xsd:element name="template" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="BrandedSmsMessageList">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="impl:SmsMessageList">
+            <xsd:sequence>
+              <xsd:element name="senderId" nillable="true" type="xsd:string" />
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="SmsServiceException">
+        <xsd:sequence />
+      </xsd:complexType>
+      <xsd:complexType name="TwoWaySmsMessageList">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="impl:SmsMessageList">
+            <xsd:sequence>
+              <xsd:element name="messageId" nillable="true" type="xsd:string" />
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="InboundSmsMessage">
+        <xsd:sequence>
+          <xsd:element name="inboundNumber" nillable="true" type="xsd:string" />
+          <xsd:element name="message" nillable="true" type="xsd:string" />
+          <xsd:element name="mobile" nillable="true" type="xsd:string" />
+          <xsd:element name="when" type="xsd:long" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfBrandedSmsMessage">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="impl:BrandedSmsMessage[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfTwoWaySmsMessage">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="impl:TwoWaySmsMessage[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfSmsReply">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="impl:SmsReply[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfInboundSmsMessage">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="impl:InboundSmsMessage[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="disconnectRequest">
+    <wsdl:part name="in0" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="sendTwoWaySmsMessageResponse">
+    <wsdl:part name="sendTwoWaySmsMessageReturn" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="getAllInboundSmsMessagesRequest">
+    <wsdl:part name="in0" type="xsd:string" />
+    <wsdl:part name="in1" type="xsd:boolean" />
+  </wsdl:message>
+  <wsdl:message name="getAllSmsMessageRepliesRequest">
+    <wsdl:part name="in0" type="xsd:string" />
+    <wsdl:part name="in1" type="xsd:boolean" />
+  </wsdl:message>
+  <wsdl:message name="disconnectResponse">
+    <wsdl:part name="disconnectReturn" type="xsd:boolean" />
+  </wsdl:message>
+  <wsdl:message name="SmsServiceException">
+    <wsdl:part name="fault" type="impl:SmsServiceException" />
+  </wsdl:message>
+  <wsdl:message name="sendBrandedSmsMessagesRequest">
+    <wsdl:part name="in0" type="xsd:string" />
+    <wsdl:part name="in1" type="impl:ArrayOfBrandedSmsMessage" />
+  </wsdl:message>
+  <wsdl:message name="getSmsMessageRepliesRequest">
+    <wsdl:part name="in0" type="xsd:string" />
+    <wsdl:part name="in1" type="xsd:string" />
+    <wsdl:part name="in2" type="xsd:boolean" />
+  </wsdl:message>
+  <wsdl:message name="getCurrentBalanceRequest">
+    <wsdl:part name="in0" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="scheduleBrandedSmsMessageResponse">
+    <wsdl:part name="scheduleBrandedSmsMessageReturn" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="sendBrandedSmsMessageResponse">
+    <wsdl:part name="sendBrandedSmsMessageReturn" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="sendBrandedSmsMessageRequest">
+    <wsdl:part name="in0" type="xsd:string" />
+    <wsdl:part name="in1" type="impl:BrandedSmsMessage" />
+  </wsdl:message>
+  <wsdl:message name="connectRequest">
+    <wsdl:part name="in0" type="xsd:string" />
+    <wsdl:part name="in1" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="scheduleBrandedSmsMessageRequest">
+    <wsdl:part name="in0" type="xsd:string" />
+    <wsdl:part name="in1" type="impl:BrandedSmsMessage" />
+    <wsdl:part name="in2" type="xsd:long" />
+  </wsdl:message>
+  <wsdl:message name="getInboundSmsMessagesResponse">
+    <wsdl:part name="getInboundSmsMessagesReturn" type="impl:ArrayOfInboundSmsMessage" />
+  </wsdl:message>
+  <wsdl:message name="sendBrandedSmsMessageListResponse">
+    <wsdl:part name="sendBrandedSmsMessageListReturn" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="getCurrentBalanceResponse">
+    <wsdl:part name="getCurrentBalanceReturn" type="xsd:double" />
+  </wsdl:message>
+  <wsdl:message name="reconnectRequest">
+    <wsdl:part name="in0" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="connectWithLicenceRequest">
+    <wsdl:part name="in0" type="xsd:string" />
+    <wsdl:part name="in1" type="xsd:string" />
+    <wsdl:part name="in2" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="connectResponse">
+    <wsdl:part name="connectReturn" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="getAllSmsMessageRepliesResponse">
+    <wsdl:part name="getAllSmsMessageRepliesReturn" type="impl:ArrayOfSmsReply" />
+  </wsdl:message>
+  <wsdl:message name="getAllInboundSmsMessagesResponse">
+    <wsdl:part name="getAllInboundSmsMessagesReturn" type="impl:ArrayOfInboundSmsMessage" />
+  </wsdl:message>
+  <wsdl:message name="getInboundSmsMessagesRequest">
+    <wsdl:part name="in0" type="xsd:string" />
+    <wsdl:part name="in1" type="xsd:string" />
+    <wsdl:part name="in2" type="xsd:boolean" />
+  </wsdl:message>
+  <wsdl:message name="scheduleTwoWaySmsMessageResponse">
+    <wsdl:part name="scheduleTwoWaySmsMessageReturn" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="sendTwoWaySmsMessagesResponse">
+    <wsdl:part name="sendTwoWaySmsMessagesReturn" type="impl:ArrayOf_xsd_string" />
+  </wsdl:message>
+  <wsdl:message name="scheduleTwoWaySmsMessageRequest">
+    <wsdl:part name="in0" type="xsd:string" />
+    <wsdl:part name="in1" type="impl:TwoWaySmsMessage" />
+    <wsdl:part name="in2" type="xsd:long" />
+  </wsdl:message>
+  <wsdl:message name="sendTwoWaySmsMessageRequest">
+    <wsdl:part name="in0" type="xsd:string" />
+    <wsdl:part name="in1" type="impl:TwoWaySmsMessage" />
+  </wsdl:message>
+  <wsdl:message name="sendTwoWaySmsMessageListResponse">
+    <wsdl:part name="sendTwoWaySmsMessageListReturn" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="sendBrandedSmsMessagesResponse">
+    <wsdl:part name="sendBrandedSmsMessagesReturn" type="impl:ArrayOf_xsd_string" />
+  </wsdl:message>
+  <wsdl:message name="connectWithLicenceResponse">
+    <wsdl:part name="connectWithLicenceReturn" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="sendTwoWaySmsMessagesRequest">
+    <wsdl:part name="in0" type="xsd:string" />
+    <wsdl:part name="in1" type="impl:ArrayOfTwoWaySmsMessage" />
+  </wsdl:message>
+  <wsdl:message name="sendBrandedSmsMessageListRequest">
+    <wsdl:part name="in0" type="xsd:string" />
+    <wsdl:part name="in1" type="impl:BrandedSmsMessageList" />
+  </wsdl:message>
+  <wsdl:message name="getSmsMessageRepliesResponse">
+    <wsdl:part name="getSmsMessageRepliesReturn" type="impl:ArrayOfSmsReply" />
+  </wsdl:message>
+  <wsdl:message name="sendTwoWaySmsMessageListRequest">
+    <wsdl:part name="in0" type="xsd:string" />
+    <wsdl:part name="in1" type="impl:TwoWaySmsMessageList" />
+  </wsdl:message>
+  <wsdl:message name="reconnectResponse">
+    <wsdl:part name="reconnectReturn" type="xsd:boolean" />
+  </wsdl:message>
+  <wsdl:portType name="SmsGateway">
+    <wsdl:operation name="connect" parameterOrder="in0 in1">
+      <wsdl:input name="connectRequest" message="impl:connectRequest" />
+      <wsdl:output name="connectResponse" message="impl:connectResponse" />
+      <wsdl:fault name="SmsServiceException" message="impl:SmsServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="disconnect" parameterOrder="in0">
+      <wsdl:input name="disconnectRequest" message="impl:disconnectRequest" />
+      <wsdl:output name="disconnectResponse" message="impl:disconnectResponse" />
+      <wsdl:fault name="SmsServiceException" message="impl:SmsServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="connectWithLicence" parameterOrder="in0 in1 in2">
+      <wsdl:input name="connectWithLicenceRequest" message="impl:connectWithLicenceRequest" />
+      <wsdl:output name="connectWithLicenceResponse" message="impl:connectWithLicenceResponse" />
+      <wsdl:fault name="SmsServiceException" message="impl:SmsServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="reconnect" parameterOrder="in0">
+      <wsdl:input name="reconnectRequest" message="impl:reconnectRequest" />
+      <wsdl:output name="reconnectResponse" message="impl:reconnectResponse" />
+      <wsdl:fault name="SmsServiceException" message="impl:SmsServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="getCurrentBalance" parameterOrder="in0">
+      <wsdl:input name="getCurrentBalanceRequest" message="impl:getCurrentBalanceRequest" />
+      <wsdl:output name="getCurrentBalanceResponse" message="impl:getCurrentBalanceResponse" />
+      <wsdl:fault name="SmsServiceException" message="impl:SmsServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="sendBrandedSmsMessage" parameterOrder="in0 in1">
+      <wsdl:input name="sendBrandedSmsMessageRequest" message="impl:sendBrandedSmsMessageRequest" />
+      <wsdl:output name="sendBrandedSmsMessageResponse" message="impl:sendBrandedSmsMessageResponse" />
+      <wsdl:fault name="SmsServiceException" message="impl:SmsServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="sendTwoWaySmsMessage" parameterOrder="in0 in1">
+      <wsdl:input name="sendTwoWaySmsMessageRequest" message="impl:sendTwoWaySmsMessageRequest" />
+      <wsdl:output name="sendTwoWaySmsMessageResponse" message="impl:sendTwoWaySmsMessageResponse" />
+      <wsdl:fault name="SmsServiceException" message="impl:SmsServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="scheduleBrandedSmsMessage" parameterOrder="in0 in1 in2">
+      <wsdl:input name="scheduleBrandedSmsMessageRequest" message="impl:scheduleBrandedSmsMessageRequest" />
+      <wsdl:output name="scheduleBrandedSmsMessageResponse" message="impl:scheduleBrandedSmsMessageResponse" />
+      <wsdl:fault name="SmsServiceException" message="impl:SmsServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="scheduleTwoWaySmsMessage" parameterOrder="in0 in1 in2">
+      <wsdl:input name="scheduleTwoWaySmsMessageRequest" message="impl:scheduleTwoWaySmsMessageRequest" />
+      <wsdl:output name="scheduleTwoWaySmsMessageResponse" message="impl:scheduleTwoWaySmsMessageResponse" />
+      <wsdl:fault name="SmsServiceException" message="impl:SmsServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="sendBrandedSmsMessages" parameterOrder="in0 in1">
+      <wsdl:input name="sendBrandedSmsMessagesRequest" message="impl:sendBrandedSmsMessagesRequest" />
+      <wsdl:output name="sendBrandedSmsMessagesResponse" message="impl:sendBrandedSmsMessagesResponse" />
+      <wsdl:fault name="SmsServiceException" message="impl:SmsServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="sendTwoWaySmsMessages" parameterOrder="in0 in1">
+      <wsdl:input name="sendTwoWaySmsMessagesRequest" message="impl:sendTwoWaySmsMessagesRequest" />
+      <wsdl:output name="sendTwoWaySmsMessagesResponse" message="impl:sendTwoWaySmsMessagesResponse" />
+      <wsdl:fault name="SmsServiceException" message="impl:SmsServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="sendBrandedSmsMessageList" parameterOrder="in0 in1">
+      <wsdl:input name="sendBrandedSmsMessageListRequest" message="impl:sendBrandedSmsMessageListRequest" />
+      <wsdl:output name="sendBrandedSmsMessageListResponse" message="impl:sendBrandedSmsMessageListResponse" />
+      <wsdl:fault name="SmsServiceException" message="impl:SmsServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="sendTwoWaySmsMessageList" parameterOrder="in0 in1">
+      <wsdl:input name="sendTwoWaySmsMessageListRequest" message="impl:sendTwoWaySmsMessageListRequest" />
+      <wsdl:output name="sendTwoWaySmsMessageListResponse" message="impl:sendTwoWaySmsMessageListResponse" />
+      <wsdl:fault name="SmsServiceException" message="impl:SmsServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="getAllSmsMessageReplies" parameterOrder="in0 in1">
+      <wsdl:input name="getAllSmsMessageRepliesRequest" message="impl:getAllSmsMessageRepliesRequest" />
+      <wsdl:output name="getAllSmsMessageRepliesResponse" message="impl:getAllSmsMessageRepliesResponse" />
+      <wsdl:fault name="SmsServiceException" message="impl:SmsServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="getSmsMessageReplies" parameterOrder="in0 in1 in2">
+      <wsdl:input name="getSmsMessageRepliesRequest" message="impl:getSmsMessageRepliesRequest" />
+      <wsdl:output name="getSmsMessageRepliesResponse" message="impl:getSmsMessageRepliesResponse" />
+      <wsdl:fault name="SmsServiceException" message="impl:SmsServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="getInboundSmsMessages" parameterOrder="in0 in1 in2">
+      <wsdl:input name="getInboundSmsMessagesRequest" message="impl:getInboundSmsMessagesRequest" />
+      <wsdl:output name="getInboundSmsMessagesResponse" message="impl:getInboundSmsMessagesResponse" />
+      <wsdl:fault name="SmsServiceException" message="impl:SmsServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="getAllInboundSmsMessages" parameterOrder="in0 in1">
+      <wsdl:input name="getAllInboundSmsMessagesRequest" message="impl:getAllInboundSmsMessagesRequest" />
+      <wsdl:output name="getAllInboundSmsMessagesResponse" message="impl:getAllInboundSmsMessagesResponse" />
+      <wsdl:fault name="SmsServiceException" message="impl:SmsServiceException" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="SmsGatewaySoapBinding" type="impl:SmsGateway">
+    <wsdlsoap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <wsdl:operation name="connect">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="connectRequest">
+        <wsdlsoap:body use="encoded" namespace="urn:SmsGateway" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="connectResponse">
+        <wsdlsoap:body use="encoded" namespace="urn:SmsGateway" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="SmsServiceException">
+        <wsdlsoap:fault use="encoded" namespace="urn:SmsGateway" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="disconnect">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="disconnectRequest">
+        <wsdlsoap:body use="encoded" namespace="urn:SmsGateway" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="disconnectResponse">
+        <wsdlsoap:body use="encoded" namespace="urn:SmsGateway" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="SmsServiceException">
+        <wsdlsoap:fault use="encoded" namespace="urn:SmsGateway" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="connectWithLicence">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="connectWithLicenceRequest">
+        <wsdlsoap:body use="encoded" namespace="urn:SmsGateway" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="connectWithLicenceResponse">
+        <wsdlsoap:body use="encoded" namespace="urn:SmsGateway" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="SmsServiceException">
+        <wsdlsoap:fault use="encoded" namespace="urn:SmsGateway" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="reconnect">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="reconnectRequest">
+        <wsdlsoap:body use="encoded" namespace="urn:SmsGateway" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="reconnectResponse">
+        <wsdlsoap:body use="encoded" namespace="urn:SmsGateway" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="SmsServiceException">
+        <wsdlsoap:fault use="encoded" namespace="urn:SmsGateway" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getCurrentBalance">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="getCurrentBalanceRequest">
+        <wsdlsoap:body use="encoded" namespace="urn:SmsGateway" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="getCurrentBalanceResponse">
+        <wsdlsoap:body use="encoded" namespace="urn:SmsGateway" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="SmsServiceException">
+        <wsdlsoap:fault use="encoded" namespace="urn:SmsGateway" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="sendBrandedSmsMessage">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="sendBrandedSmsMessageRequest">
+        <wsdlsoap:body use="encoded" namespace="urn:SmsGateway" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="sendBrandedSmsMessageResponse">
+        <wsdlsoap:body use="encoded" namespace="urn:SmsGateway" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="SmsServiceException">
+        <wsdlsoap:fault use="encoded" namespace="urn:SmsGateway" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="sendTwoWaySmsMessage">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="sendTwoWaySmsMessageRequest">
+        <wsdlsoap:body use="encoded" namespace="urn:SmsGateway" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="sendTwoWaySmsMessageResponse">
+        <wsdlsoap:body use="encoded" namespace="urn:SmsGateway" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="SmsServiceException">
+        <wsdlsoap:fault use="encoded" namespace="urn:SmsGateway" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="scheduleBrandedSmsMessage">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="scheduleBrandedSmsMessageRequest">
+        <wsdlsoap:body use="encoded" namespace="urn:SmsGateway" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="scheduleBrandedSmsMessageResponse">
+        <wsdlsoap:body use="encoded" namespace="urn:SmsGateway" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="SmsServiceException">
+        <wsdlsoap:fault use="encoded" namespace="urn:SmsGateway" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="scheduleTwoWaySmsMessage">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="scheduleTwoWaySmsMessageRequest">
+        <wsdlsoap:body use="encoded" namespace="urn:SmsGateway" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="scheduleTwoWaySmsMessageResponse">
+        <wsdlsoap:body use="encoded" namespace="urn:SmsGateway" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="SmsServiceException">
+        <wsdlsoap:fault use="encoded" namespace="urn:SmsGateway" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="sendBrandedSmsMessages">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="sendBrandedSmsMessagesRequest">
+        <wsdlsoap:body use="encoded" namespace="urn:SmsGateway" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="sendBrandedSmsMessagesResponse">
+        <wsdlsoap:body use="encoded" namespace="urn:SmsGateway" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="SmsServiceException">
+        <wsdlsoap:fault use="encoded" namespace="urn:SmsGateway" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="sendTwoWaySmsMessages">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="sendTwoWaySmsMessagesRequest">
+        <wsdlsoap:body use="encoded" namespace="urn:SmsGateway" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="sendTwoWaySmsMessagesResponse">
+        <wsdlsoap:body use="encoded" namespace="urn:SmsGateway" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="SmsServiceException">
+        <wsdlsoap:fault use="encoded" namespace="urn:SmsGateway" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="sendBrandedSmsMessageList">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="sendBrandedSmsMessageListRequest">
+        <wsdlsoap:body use="encoded" namespace="urn:SmsGateway" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="sendBrandedSmsMessageListResponse">
+        <wsdlsoap:body use="encoded" namespace="urn:SmsGateway" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="SmsServiceException">
+        <wsdlsoap:fault use="encoded" namespace="urn:SmsGateway" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="sendTwoWaySmsMessageList">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="sendTwoWaySmsMessageListRequest">
+        <wsdlsoap:body use="encoded" namespace="urn:SmsGateway" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="sendTwoWaySmsMessageListResponse">
+        <wsdlsoap:body use="encoded" namespace="urn:SmsGateway" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="SmsServiceException">
+        <wsdlsoap:fault use="encoded" namespace="urn:SmsGateway" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getAllSmsMessageReplies">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="getAllSmsMessageRepliesRequest">
+        <wsdlsoap:body use="encoded" namespace="urn:SmsGateway" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="getAllSmsMessageRepliesResponse">
+        <wsdlsoap:body use="encoded" namespace="urn:SmsGateway" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="SmsServiceException">
+        <wsdlsoap:fault use="encoded" namespace="urn:SmsGateway" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getSmsMessageReplies">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="getSmsMessageRepliesRequest">
+        <wsdlsoap:body use="encoded" namespace="urn:SmsGateway" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="getSmsMessageRepliesResponse">
+        <wsdlsoap:body use="encoded" namespace="urn:SmsGateway" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="SmsServiceException">
+        <wsdlsoap:fault use="encoded" namespace="urn:SmsGateway" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getInboundSmsMessages">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="getInboundSmsMessagesRequest">
+        <wsdlsoap:body use="encoded" namespace="urn:SmsGateway" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="getInboundSmsMessagesResponse">
+        <wsdlsoap:body use="encoded" namespace="urn:SmsGateway" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="SmsServiceException">
+        <wsdlsoap:fault use="encoded" namespace="urn:SmsGateway" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getAllInboundSmsMessages">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="getAllInboundSmsMessagesRequest">
+        <wsdlsoap:body use="encoded" namespace="urn:SmsGateway" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="getAllInboundSmsMessagesResponse">
+        <wsdlsoap:body use="encoded" namespace="urn:SmsGateway" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+      <wsdl:fault name="SmsServiceException">
+        <wsdlsoap:fault use="encoded" namespace="urn:SmsGateway" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SmsGatewayService">
+    <wsdl:port name="SmsGateway" binding="impl:SmsGatewaySoapBinding">
+      <wsdlsoap:address location="https://api.directsms.com.au/s3/services/SmsGateway" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

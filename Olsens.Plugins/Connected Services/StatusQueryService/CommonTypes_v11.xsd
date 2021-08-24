@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="utf-8"?>
+<schema xmlns:tns="http://bdm.nsw.gov.au/Schemas/CommonTypes_v1.0" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://bdm.nsw.gov.au/Schemas/CommonTypes_v1.0" xmlns="http://www.w3.org/2001/XMLSchema">
+  <element name="LodgeResponse" type="tns:LodgeResponseType" />
+  <element name="Fault" type="tns:Fault" />
+  <complexType name="LodgeResponseType">
+    <sequence>
+      <element name="Status" type="string" />
+      <element name="Id" type="string" />
+      <element minOccurs="0" name="Message" type="string" />
+    </sequence>
+  </complexType>
+  <complexType name="LodgeWithCertificateResponseType">
+    <sequence>
+      <element minOccurs="0" maxOccurs="1" name="Notification" type="tns:LodgeResponseType" />
+      <element minOccurs="0" maxOccurs="1" name="Application" type="tns:LodgeResponseType" />
+    </sequence>
+  </complexType>
+  <complexType name="Fault">
+    <sequence>
+      <element name="ErrorCode" type="string" />
+      <element name="ErrorMessage" type="string" />
+      <element minOccurs="0" maxOccurs="unbounded" name="ErrorDetail" type="string" />
+    </sequence>
+  </complexType>
+  <simpleType name="GenderType">
+    <restriction base="string">
+      <enumeration value="Male" />
+      <enumeration value="Female" />
+      <enumeration value="Indeterminate" />
+      <enumeration value="Intersex" />
+      <enumeration value="Unknown" />
+    </restriction>
+  </simpleType>
+  <simpleType name="MaritalStatusType">
+    <restriction base="string">
+      <enumeration value="De facto" />
+      <enumeration value="Divorced" />
+      <enumeration value="Married" />
+      <enumeration value="Never Married" />
+      <enumeration value="Widowed" />
+      <enumeration value="Unknown" />
+    </restriction>
+  </simpleType>
+  <simpleType name="MarriageType">
+    <restriction base="string">
+      <enumeration value="DE FACTO" />
+      <enumeration value="DIVORCED" />
+      <enumeration value="WIDOWED" />
+      <enumeration value="MARRIED" />
+      <enumeration value="UNKNOWN" />
+    </restriction>
+  </simpleType>
+  <simpleType name="ParentRelationshipType">
+    <restriction base="string">
+      <maxLength value="20" />
+      <enumeration value="FATHER" />
+      <enumeration value="MOTHER" />
+      <enumeration value="PARENT" />
+    </restriction>
+  </simpleType>
+  <simpleType name="partyDescriptionType">
+    <restriction base="string">
+      <enumeration value="Bride" />
+      <enumeration value="Bridegroom" />
+      <enumeration value="Groom" />
+      <enumeration value="Partner" />
+    </restriction>
+  </simpleType>
+  <simpleType name="sexType">
+    <restriction base="string">
+      <enumeration value="Female" />
+      <enumeration value="Male" />
+      <enumeration value="X" />
+    </restriction>
+  </simpleType>
+  <simpleType name="AboriginalityType">
+    <restriction base="string">
+      <enumeration value="Aboriginal" />
+      <enumeration value="Torres Strait Islander" />
+      <enumeration value="Both Aboriginal and Torres Strait Islander" />
+      <enumeration value="Neither" />
+      <enumeration value="Unknown" />
+      <enumeration value="Not Stated" />
+    </restriction>
+  </simpleType>
+  <simpleType name="DateRangeBasis">
+    <restriction base="string">
+      <enumeration value="On" />
+      <enumeration value="Between" />
+      <enumeration value="Unknown" />
+      <enumeration value="Approx." />
+      <enumeration value="On or After" />
+      <enumeration value="On or About" />
+      <enumeration value="Sometime On or After" />
+    </restriction>
+  </simpleType>
+  <simpleType name="TimeUnits">
+    <restriction base="string">
+      <enumeration value="seconds" />
+      <enumeration value="minutes" />
+      <enumeration value="hours" />
+      <enumeration value="days" />
+      <enumeration value="weeks" />
+      <enumeration value="months" />
+      <enumeration value="years" />
+      <enumeration value="minute" />
+      <enumeration value="hour" />
+      <enumeration value="day" />
+      <enumeration value="week" />
+      <enumeration value="month" />
+      <enumeration value="year" />
+      <enumeration value="unknown" />
+    </restriction>
+  </simpleType>
+  <complexType name="AddressType">
+    <sequence>
+      <element minOccurs="0" name="Country">
+        <simpleType>
+          <restriction base="string">
+            <maxLength value="50" />
+          </restriction>
+        </simpleType>
+      </element>
+      <element minOccurs="0" name="Line1">
+        <simpleType>
+          <restriction base="string">
+            <maxLength value="70" />
+          </restriction>
+        </simpleType>
+      </element>
+      <element minOccurs="0" name="Line2">
+        <simpleType>
+          <restriction base="string">
+            <maxLength value="70" />
+          </restriction>
+        </simpleType>
+      </element>
+      <element minOccurs="0" name="SuburbOrTown">
+        <simpleType>
+          <restriction base="string">
+            <maxLength value="50" />
+          </restriction>
+        </simpleType>
+      </element>
+      <element minOccurs="0" name="State">
+        <simpleType>
+          <restriction base="string">
+            <enumeration value="NSW" />
+            <enumeration value="QLD" />
+            <enumeration value="ACT" />
+            <enumeration value="VIC" />
+            <enumeration value="SA" />
+            <enumeration value="NT" />
+            <enumeration value="WA" />
+            <enumeration value="TAS" />
+            <enumeration value="Unknown" />
+          </restriction>
+        </simpleType>
+      </element>
+      <element minOccurs="0" name="Postcode" type="int" />
+      <element minOccurs="0" name="InternationalAddress" type="string" />
+    </sequence>
+  </complexType>
+  <complexType name="PlaceType">
+    <sequence>
+      <element minOccurs="0" name="StateOrTerritoryOrCountry">
+        <simpleType>
+          <restriction base="string">
+            <maxLength value="50" />
+          </restriction>
+        </simpleType>
+      </element>
+      <element minOccurs="0" name="SuburbOrTownOrCity">
+        <simpleType>
+          <restriction base="string">
+            <maxLength value="50" />
+          </restriction>
+        </simpleType>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="ContactDetailsType">
+    <sequence>
+      <element minOccurs="0" name="ContactPhone">
+        <simpleType>
+          <restriction base="string">
+            <maxLength value="15" />
+          </restriction>
+        </simpleType>
+      </element>
+      <element minOccurs="0" name="ContactEmail">
+        <simpleType>
+          <restriction base="string">
+            <maxLength value="56" />
+          </restriction>
+        </simpleType>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="NameType">
+    <sequence>
+      <element minOccurs="0" name="FamilyName">
+        <simpleType>
+          <restriction base="string">
+            <maxLength value="80" />
+          </restriction>
+        </simpleType>
+      </element>
+      <element minOccurs="0" name="FirstGivenName">
+        <simpleType>
+          <restriction base="string">
+            <maxLength value="70" />
+          </restriction>
+        </simpleType>
+      </element>
+      <element minOccurs="0" name="OtherGivenNames">
+        <simpleType>
+          <restriction base="string">
+            <maxLength value="70" />
+          </restriction>
+        </simpleType>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="MandatoryNameType">
+    <sequence>
+      <element minOccurs="1" name="FamilyName">
+        <simpleType>
+          <restriction base="string">
+            <maxLength value="80" />
+          </restriction>
+        </simpleType>
+      </element>
+      <element minOccurs="1" name="FirstGivenName">
+        <simpleType>
+          <restriction base="string">
+            <maxLength value="70" />
+          </restriction>
+        </simpleType>
+      </element>
+      <element minOccurs="0" name="OtherGivenNames">
+        <simpleType>
+          <restriction base="string">
+            <maxLength value="70" />
+          </restriction>
+        </simpleType>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="ExtendedNameType">
+    <sequence>
+      <element minOccurs="0" name="Name" type="tns:NameType" />
+      <element minOccurs="0" name="FamilyNameAtBirth">
+        <simpleType>
+          <restriction base="string">
+            <maxLength value="70" />
+          </restriction>
+        </simpleType>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="OccupationType">
+    <sequence>
+      <element minOccurs="0" name="Occupation">
+        <simpleType>
+          <restriction base="string">
+            <maxLength value="40" />
+          </restriction>
+        </simpleType>
+      </element>
+      <element minOccurs="0" name="MainOccupationActivity">
+        <simpleType>
+          <restriction base="string">
+            <maxLength value="80" />
+          </restriction>
+        </simpleType>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="InformantDetailsType">
+    <sequence>
+      <element minOccurs="0" name="hasSignedDeclaration" type="boolean" />
+      <element minOccurs="0" name="InformantRelationship">
+        <simpleType>
+          <restriction base="string">
+            <maxLength value="20" />
+            <enumeration value="Father" />
+            <enumeration value="Mother" />
+            <enumeration value="Parent" />
+            <enumeration value="Agent" />
+            <enumeration value="Aunt" />
+            <enumeration value="Brother" />
+            <enumeration value="Brother-in-Law" />
+            <enumeration value="Caseworker" />
+            <enumeration value="Cousin" />
+            <enumeration value="Daughter" />
+            <enumeration value="Daughter-in-Law" />
+            <enumeration value="De facto" />
+            <enumeration value="Director of Nursing" />
+            <enumeration value="Executor" />
+            <enumeration value="Executrix" />
+            <enumeration value="Ex-Spouse" />
+            <enumeration value="Father-in-Law" />
+            <enumeration value="Foster Father" />
+            <enumeration value="Foster Mother" />
+            <enumeration value="Friend" />
+            <enumeration value="Funeral Director" />
+            <enumeration value="Goddaughter" />
+            <enumeration value="Godfather" />
+            <enumeration value="Godmother" />
+            <enumeration value="Godson" />
+            <enumeration value="Granddaughter" />
+            <enumeration value="Grandfather" />
+            <enumeration value="Grandmother" />
+            <enumeration value="Grandnephew" />
+            <enumeration value="Grandniece" />
+            <enumeration value="Grandson" />
+            <enumeration value="Great-Aunt" />
+            <enumeration value="Great-Granddaughter" />
+            <enumeration value="Great-Grandson" />
+            <enumeration value="Great-Uncle" />
+            <enumeration value="Guardian" />
+            <enumeration value="Half Brother" />
+            <enumeration value="Half Sister" />
+            <enumeration value="Informant" />
+            <enumeration value="Mother-in-Law" />
+            <enumeration value="Nephew" />
+            <enumeration value="Niece" />
+            <enumeration value="No Relation" />
+            <enumeration value="Parents" />
+            <enumeration value="Second Cousin" />
+            <enumeration value="Self" />
+            <enumeration value="Sister" />
+            <enumeration value="Sister-in-Law" />
+            <enumeration value="Son" />
+            <enumeration value="Son-in-Law" />
+            <enumeration value="Step Brother" />
+            <enumeration value="Step Daughter" />
+            <enumeration value="Step Father" />
+            <enumeration value="Step Sister" />
+            <enumeration value="Step Son" />
+            <enumeration value="Step Mother" />
+            <enumeration value="Third Cousin" />
+            <enumeration value="Uncle" />
+            <enumeration value="Widow" />
+            <enumeration value="Widower" />
+          </restriction>
+        </simpleType>
+      </element>
+      <element minOccurs="0" name="InformantName" type="tns:NameType" />
+      <element minOccurs="0" name="InformantResidential" type="tns:AddressType" />
+      <element minOccurs="0" name="InformantPostal" type="tns:AddressType" />
+      <element minOccurs="0" name="InformantContact" type="tns:ContactDetailsType" />
+      <element minOccurs="0" name="hasWitnessSignedDeclaration" type="boolean" />
+    </sequence>
+  </complexType>
+  <complexType name="AddressSuburbStateCountryType">
+    <sequence>
+      <element minOccurs="0" name="Country">
+        <simpleType>
+          <restriction base="string">
+            <maxLength value="50" />
+          </restriction>
+        </simpleType>
+      </element>
+      <element minOccurs="0" name="StateorTerritory">
+        <simpleType>
+          <restriction base="string">
+            <enumeration value="NSW" />
+            <enumeration value="QLD" />
+            <enumeration value="ACT" />
+            <enumeration value="VIC" />
+            <enumeration value="SA" />
+            <enumeration value="NT" />
+            <enumeration value="WA" />
+            <enumeration value="TAS" />
+            <enumeration value="Unknown" />
+          </restriction>
+        </simpleType>
+      </element>
+      <element minOccurs="0" name="SuburbOrTownOrCity">
+        <simpleType>
+          <restriction base="string">
+            <maxLength value="50" />
+          </restriction>
+        </simpleType>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="NameFourType">
+    <sequence>
+      <element minOccurs="0" name="FamilyName">
+        <simpleType>
+          <restriction base="string">
+            <maxLength value="80" />
+          </restriction>
+        </simpleType>
+      </element>
+      <element minOccurs="0" name="FirstGivenName">
+        <simpleType>
+          <restriction base="string">
+            <maxLength value="70" />
+          </restriction>
+        </simpleType>
+      </element>
+      <element minOccurs="0" name="OtherGivenNames">
+        <simpleType>
+          <restriction base="string">
+            <maxLength value="70" />
+          </restriction>
+        </simpleType>
+      </element>
+      <element minOccurs="0" name="MothersFamilyNameAtBirth">
+        <simpleType>
+          <restriction base="string">
+            <maxLength value="70" />
+          </restriction>
+        </simpleType>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="NameFiveType">
+    <sequence>
+      <element minOccurs="0" name="Name" type="tns:NameFourType" />
+      <element minOccurs="0" name="FamilyNameAtBirth">
+        <simpleType>
+          <restriction base="string">
+            <maxLength value="70" />
+          </restriction>
+        </simpleType>
+      </element>
+    </sequence>
+  </complexType>
+</schema>
