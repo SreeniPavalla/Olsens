@@ -102,42 +102,42 @@ namespace Olsens.Plugins.Opportunity
                 #endregion
 
                 #region Olsens Booking
-                if (target.Contains("ols_serviceplacesessionfrom"))
-                {
-                    Entity olsensBooking = GetOlsensBooking(funeralNumber + "_From");
-                    if (olsensBooking != null)
-                    {
-                        Entity updateOB = new Entity(olsensBooking.LogicalName, olsensBooking.Id);
-                        updateOB["ols_servicedate"] = Util.LocalFromUTCUserDateTime(GetService(UserType.User), target.GetAttributeValue<DateTime>("ols_serviceplacesessionfrom"));
-                        Update(UserType.User, updateOB);
-                    }
-                    else
-                    {
-                        Entity createOB = new Entity("ols_olsensbooking");
-                        createOB["ols_name"] = funeralNumber + "_From";
-                        createOB["ols_servicedate"] = Util.LocalFromUTCUserDateTime(GetService(UserType.User), target.GetAttributeValue<DateTime>("ols_serviceplacesessionfrom"));
-                        createOB["ols_funeralid"] = new EntityReference(target.LogicalName, target.Id);
-                        Create(UserType.User, createOB);
-                    }
-                }
-                if (target.Contains("ols_serviceplacesessionto"))
-                {
-                    Entity olsensBooking = GetOlsensBooking(funeralNumber + "_To");
-                    if (olsensBooking != null)
-                    {
-                        Entity updateOB = new Entity(olsensBooking.LogicalName, olsensBooking.Id);
-                        updateOB["ols_servicedate"] = Util.LocalFromUTCUserDateTime(GetService(UserType.User), target.GetAttributeValue<DateTime>("ols_serviceplacesessionto"));
-                        Update(UserType.User, updateOB);
-                    }
-                    else
-                    {
-                        Entity createOB = new Entity("ols_olsensbooking");
-                        createOB["ols_name"] = funeralNumber + "_To";
-                        createOB["ols_servicedate"] = Util.LocalFromUTCUserDateTime(GetService(UserType.User), target.GetAttributeValue<DateTime>("ols_serviceplacesessionto"));
-                        createOB["ols_funeralid"] = new EntityReference(target.LogicalName, target.Id);
-                        Create(UserType.User, createOB);
-                    }
-                }
+                //if (target.Contains("ols_serviceplacesessionfrom"))
+                //{
+                //    Entity olsensBooking = GetOlsensBooking(funeralNumber + "_From");
+                //    if (olsensBooking != null)
+                //    {
+                //        Entity updateOB = new Entity(olsensBooking.LogicalName, olsensBooking.Id);
+                //        updateOB["ols_servicedate"] = Util.LocalFromUTCUserDateTime(GetService(UserType.User), target.GetAttributeValue<DateTime>("ols_serviceplacesessionfrom"));
+                //        Update(UserType.User, updateOB);
+                //    }
+                //    else
+                //    {
+                //        Entity createOB = new Entity("ols_olsensbooking");
+                //        createOB["ols_name"] = funeralNumber + "_From";
+                //        createOB["ols_servicedate"] = Util.LocalFromUTCUserDateTime(GetService(UserType.User), target.GetAttributeValue<DateTime>("ols_serviceplacesessionfrom"));
+                //        createOB["ols_funeralid"] = new EntityReference(target.LogicalName, target.Id);
+                //        Create(UserType.User, createOB);
+                //    }
+                //}
+                //if (target.Contains("ols_serviceplacesessionto"))
+                //{
+                //    Entity olsensBooking = GetOlsensBooking(funeralNumber + "_To");
+                //    if (olsensBooking != null)
+                //    {
+                //        Entity updateOB = new Entity(olsensBooking.LogicalName, olsensBooking.Id);
+                //        updateOB["ols_servicedate"] = Util.LocalFromUTCUserDateTime(GetService(UserType.User), target.GetAttributeValue<DateTime>("ols_serviceplacesessionto"));
+                //        Update(UserType.User, updateOB);
+                //    }
+                //    else
+                //    {
+                //        Entity createOB = new Entity("ols_olsensbooking");
+                //        createOB["ols_name"] = funeralNumber + "_To";
+                //        createOB["ols_servicedate"] = Util.LocalFromUTCUserDateTime(GetService(UserType.User), target.GetAttributeValue<DateTime>("ols_serviceplacesessionto"));
+                //        createOB["ols_funeralid"] = new EntityReference(target.LogicalName, target.Id);
+                //        Create(UserType.User, createOB);
+                //    }
+                //}
                 #endregion
 
                 AppendLog("Opportunity PostCreate - Plugin Excecution is Completed.");
